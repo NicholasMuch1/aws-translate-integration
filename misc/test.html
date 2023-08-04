@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Translation API Example</title>
+</head>
+<body>
+    <h1>Translation API Example</h1>
+    <div>
+        <label for="text-input">Enter Text to Translate:</label>
+        <input type="text" id="text-input" />
+        <button onclick="translateText()">Translate</button>
+    </div>
+    <div>
+        <p>Translated Text: <span id="translated-text"></span></p>
+    </div>
+
+    <script>
+        function translateText() {
+            const textInput = document.getElementById('text-input').value;
+
+            // Make the API call
+            fetch('/translate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: textInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const translatedText = data.translated_text;
+                document.getElementById('translated-text').textContent = translatedText;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
